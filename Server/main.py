@@ -2,26 +2,26 @@ import sys
 import logging
 import socket
 from server.threaded_server import ThreadedServer
-from server.client_handlers import ClientHandler
+from server.client_handlers import FTPClientHandler
 from server.utils import setup_logger
 from server.constants import HOST, PORT
 
 
 def main(host: str, port: int):
-    logger = setup_logger(__name__, logging.DEBUG)
-    server = ThreadedServer(ClientHandler, logger,
+    logger = setup_logger(__name__, logging.INFO, logging.DEBUG)
+    server = ThreadedServer(FTPClientHandler, logger,
                             socket.AF_INET, socket.SOCK_STREAM)
     server.bind_and_listen(host, port)
     server.start()
 
 
 if __name__ == '__main__':
-    if sys.argv[1]:
+    try:
         host = sys.argv[1]
-    else:
+    except:
         host = HOST
-    if sys.argv[2]:
+    try:
         port = int(sys.argv[2])
-    else:
+    except:
         port = PORT
     main(host, port)
