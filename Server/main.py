@@ -16,12 +16,14 @@ def main(host: str, port: int):
 
 
 if __name__ == '__main__':
+    server_host: str = HOST
+    server_port: int = PORT
     try:
-        host:str = sys.argv[1]
-    except:
-        host:str = HOST
+        server_host:str = sys.argv[1]
+    except IndexError:
+        pass
     try:
-        port:int = int(sys.argv[2])
-    except:
-        port:int = PORT
-    main(host, port)
+        server_port:int = int(sys.argv[2])
+    except IndexError:
+        pass
+    main(server_host, server_port)

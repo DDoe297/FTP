@@ -72,8 +72,9 @@ class FTPClientHandler(ClientHandler):
             self.working_wirectory = self.working_wirectory.parent
             self.send_message("226 Operation successful\r\n")
         else:
-            self.logger.debug(f'Client {self.socket.getpeername()} CDUP: already in root directory. ' +
-                              f'Current working directory: {self.working_wirectory}')
+            self.logger.debug(
+                f'Client {self.socket.getpeername()} CDUP: already in root directory. ' +
+                f'Current working directory: {self.working_wirectory}')
             self.send_message("226 Operation successful\r\n")
 
     def CWD(self, argument: str) -> None:
@@ -148,7 +149,7 @@ class FTPClientHandler(ClientHandler):
         self.logger.debug(
             f'Client {self.socket.getpeername()} PWD: current working directory: {self.working_wirectory}')
         if self.working_wirectory == DEFAULT_DIR:
-            self.send_message(f'257 "/" is current directory.\r\n')
+            self.send_message('257 "/" is current directory.\r\n')
         else:
             path = self.working_wirectory.relative_to(DEFAULT_DIR)
             self.send_message(f'257 "/{str(path)}" is current directory.\r\n')
@@ -162,7 +163,7 @@ class FTPClientHandler(ClientHandler):
         self.logger.info(
             f'Client {self.socket.getpeername()} sent RETR with argument {argument}.')
         if self.passive_mode:
-            file:pathlib.Path = self.working_wirectory/argument
+            file: pathlib.Path = self.working_wirectory/argument
             if file.is_file():
                 self.logger.debug(
                     f'Client {self.socket.getpeername()} RETR: starting data transfer.')

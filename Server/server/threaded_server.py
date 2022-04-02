@@ -6,9 +6,10 @@ from .constants import PORT
 
 
 class ThreadedServer(socket.socket):
-    def __init__(self, handler: Type[ClientHandler], logger: logging.Logger, *args: Any, **kwargs: Mapping[str, Any]) -> None:
+    def __init__(self, handler: Type[ClientHandler], logger: logging.Logger,
+                 *args: Any, **kwargs: Mapping[str, Any]) -> None:
         self.logger: logging.Logger = logger
-        self.clients: List[ClientHandler] = list()
+        self.clients: List[ClientHandler] = []
         super(ThreadedServer, self).__init__(*args, **kwargs)
         self.logger.debug('Server is initialized')
         self.handler: Type[ClientHandler] = handler
