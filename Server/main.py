@@ -8,8 +8,8 @@ from server.constants import HOST, PORT
 
 
 def main(host: str, port: int):
-    logger = setup_logger(__name__, logging.INFO, logging.DEBUG)
-    server = ThreadedServer(FTPClientHandler, logger,
+    logger:logging.Logger = setup_logger(__name__, logging.INFO, logging.DEBUG)
+    server:ThreadedServer = ThreadedServer(FTPClientHandler, logger,
                             socket.AF_INET, socket.SOCK_STREAM)
     server.bind_and_listen(host, port)
     server.start()
@@ -17,11 +17,11 @@ def main(host: str, port: int):
 
 if __name__ == '__main__':
     try:
-        host = sys.argv[1]
+        host:str = sys.argv[1]
     except:
-        host = HOST
+        host:str = HOST
     try:
-        port = int(sys.argv[2])
+        port:int = int(sys.argv[2])
     except:
-        port = PORT
+        port:int = PORT
     main(host, port)

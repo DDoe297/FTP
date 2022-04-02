@@ -1,12 +1,13 @@
 import logging
 import socket
-from typing import List, Any, Type
+from typing import List, Any, Mapping, Type
 from .client_handlers import ClientHandler
 from .constants import PORT
 
+
 class ThreadedServer(socket.socket):
-    def __init__(self, handler: Type[ClientHandler], logger: logging.Logger, *args: Any, **kwargs: Any) -> None:
-        self.logger = logger
+    def __init__(self, handler: Type[ClientHandler], logger: logging.Logger, *args: Any, **kwargs: Mapping[str, Any]) -> None:
+        self.logger: logging.Logger = logger
         self.clients: List[ClientHandler] = list()
         super(ThreadedServer, self).__init__(*args, **kwargs)
         self.logger.debug('Server is initialized')
@@ -21,7 +22,7 @@ class ThreadedServer(socket.socket):
         try:
             while True:
                 (client_socket, _) = self.accept()
-                client_thread = self.handler(self.logger)
+                client_thread: ClientHandler = self.handler(self.logger)
                 client_thread.socket = client_socket
                 self.clients.append(client_thread)
                 self.logger.info(
